@@ -1,0 +1,80 @@
+#/*# Start of file bits.a */
+#
+#/*# MIPSMARK 1.0 1/5/98 Copyright 1998 J. Waldron. */
+#
+## Question:
+##  change the case of all letters in the string "ans"
+## simplifying assumption: All characters >='A' are letters
+##  (no test cases will use {}[], etc)
+## Divide "number" by 32, using shift, not div
+##
+## Then print "ans" followed by "number" and a newline 
+#/*# Output format must be:		*/
+#/*# "num Divided By 32 = -1024"		*/
+
+#/*################################################
+#					 	#
+#		text segment			#
+#						#
+#################################################
+
+	.text		
+       	.globl __start 
+__start:		# execution starts here  */
+
+
+#/* Any changes above this line will be discarded by
+# mipsmark. Put your answer between dashed lines.
+#-------------- start cut -----------------------
+
+#  Student: Yong Youn Kwon	Account: ykwon		*/
+	la $t0, ans		# load ans in t0
+	la $a0, ($t0)		# save address in a0
+	
+loop:
+	lb $t1, ($t0)		# load char in t1
+	beqz $t1, endloop	# char == '\0', break
+	blt $t1, 65, nextloop	# char < 'A', continue
+	xori $t1, 0x20		# opposite char in t1
+	sb $t1, ($t0)		# save opposite char in t0
+nextloop:
+	addi $t0, $t0, 1	# point to next char
+	j loop			# continue
+
+endloop:
+	jal print_str
+	
+	lw $t0, number		# load number in t0
+	sra $a0, $t0, 5		# shift right arithmetic by 4, save in a0
+	
+	li $v0, 1		# print integer
+	syscall
+	
+	la $a0, endl		# load endl in a0
+	jal print_str
+	
+	li $v0, 10		# exit
+	syscall
+
+print_str:
+	li $v0, 4
+	syscall
+	jr $ra
+
+#/*--------------  end cut  -----------------------
+# Any changes below this line will be discarded by
+# mipsmark. Put your answer between dashed lines.
+
+#################################################
+#                                               #
+#               data segment                    #
+#                                               #
+#################################################
+
+        .data			#*/
+number:	.word -32760
+ans:	.asciiz	"NUM dIVIDED bY 32 = "
+endl:	.asciiz "\n"
+
+#
+#/*# End of file bits.a		*/

@@ -1,0 +1,80 @@
+#/*# Start of file loopd.a */
+#
+#/*# MIPSMARK 1.0 1/5/98 Copyright 1998 J. Waldron. */
+#
+## Question:
+## "nums" is an array of "count" words.
+## "nums" will always contain an even number
+## of words.
+## Sum the even elements in "nums" (i.e. in 
+## positions 0, 2, 4, ...) and print out the 
+## sum.
+##
+#/*# Output format must be:		*/
+#/*# "sum = 16"		*/
+#include <stdio.h>       /* for printf in C programs */
+#include <stdlib.h>	 /* for exit() in C programs */
+
+
+#/*##############################################
+#					 	#
+#		text segment			#
+#						#
+#################################################
+
+	.text		
+       	.globl __start 
+__start:		# execution starts here  */
+
+
+#/* Any changes above this line will be discarded by
+# mipsmark. Put your answer between dashed lines. */
+#/*-------------- start cut ----------------------- */
+
+#/*  Student's Name: Yong Youn Kwon	Account: ykwon		*/
+	la $t0, nums		# load nums in t0
+	lw $t1, count		# load count in t1
+	li $t2, 0		# load sum=0 in t2
+
+loop:
+	blt $t1, 1, endloop	# if count < 1, break
+	sub $t1, 2		# decrement count by 2
+	lw $t3, ($t0)		# load num in t3
+	add $t2, $t2, $t3	# add num to sum
+	addi $t0, $t0, 8	# increment point by 2
+	j loop			# continue
+endloop:
+	la $a0, ans		# load ans
+	jal print_str
+
+	move $a0, $t2		# move sum to a0
+	li $v0, 1		# print integer
+	syscall
+
+	la $a0, endl		# load endl
+	jal print_str
+
+	li $v0, 10		# exit
+	syscall
+print_str:
+	li $v0, 4		# print string
+	syscall
+	jr $ra
+
+#/*--------------  end cut  -----------------------
+# Any changes below this line will be discarded by
+# mipsmark. Put your answer between dashed lines.
+
+#################################################
+#                                               #
+#               data segment                    #
+#                                               #
+#################################################
+
+        .data			#*/
+nums:	.word 3,6,2,6,2,5,9,10
+count:	.word 8
+ans:	.asciiz "sum = "
+endl:	.asciiz "\n"
+#
+#/*# End of file loopd.a		*/
