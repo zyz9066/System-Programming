@@ -1,0 +1,25 @@
+This directory contains files for CS 216 lab 12, using make
+THIS PROBLEM IS TO READ A LIST OF WORDS FROM stdin AND THEN SORT THEM
+
+You must edit the Makefile, so it works, I have just started it. 
+
+in stringutils.c, 
+	YOU must decide how to print the list
+	readarray has been tested, it reads words from stdin,
+	  you must typoe CTRL-D for Done (EOF)
+	  OR get input from a file, this way:
+	      ./sort <quick.txt
+	There is also a longer <paradise.txt
+
+	freespace free's the heap space that readarray allocated,
+	  after that, no point in calling printarray, so you could
+	  remove that last call in sortmain, once you have seen it "work"
+
+in sort.c
+	You need to actually sort (the pointers) so the words
+	are arranged in dictionary order, using strcmp.
+	Use any sorting method you like.
+
+swap.s	is useful to swap any 2 pointer values (note that I modified it
+	to swap 8-bit pointers.)
+    
